@@ -1,0 +1,26 @@
+{
+    "name": "com.example.memo_package",
+    "version": "1.0.0",
+    "displayName": "MemoPackage",
+    "description": "This is personal memo package",
+    "unity": "2022.3",
+    "unityRelease": "",
+    "documentationUrl": "",
+    "changelogUrl": "",
+    "licensesUrl": "",
+    "dependencies": {
+        "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
+        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=Assets/UniRx.Async"
+    },
+    "keywords": [
+        "Memo",
+        "memo"
+    ],
+    "author": {
+        "name": "Memo",
+        "email": "sansangjmjg@gmail.com"
+    },
+    "備考": {
+        "Dependencies参考": "https: //yotiky.hatenablog.com/entry/unity_commonlyusedpackages"
+    }
+}
