@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace mm.common
+namespace mm.core
 {
     public static class ArrayExtensions
     {

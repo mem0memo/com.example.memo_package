@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace mm.common
+namespace mm.view
 {
     public abstract class RootComponentBase<TComponent> : MonoBehaviour
     {

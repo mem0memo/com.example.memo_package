@@ -1,7 +1,7 @@
 
-using mm.common;
+using mm.core;
 
-namespace mm.core
+namespace mm.view
 {
     public class ServiceLocator :
         RootComponentBase<ServiceSystem.IService>,

@@ -1,9 +1,7 @@
 {
     "name": "mm.core",
     "rootNamespace": "mm.core",
-    "references": [
-        "GUID:1e3f68c9b4acada4fa8a6bbd68118512"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
