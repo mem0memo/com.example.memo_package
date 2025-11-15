@@ -1,7 +1,0 @@
-rounded-mplus
-無償、商用可、再配布可
-http://jikasei.me/font/rounded-mplus/about.html
-
-Google Fonts
-無償、商用可、再配布可
-https://fonts.google.com/noto/specimen/Noto+Sans+JP/about?subset=japanese&query=Noto+Sans+Japanese&noto.script=Hira

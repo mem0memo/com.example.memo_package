@@ -1,21 +1,10 @@
 {
-  "name": "com.example.memo_package",
-  "version": "1.0.0",
-  "displayName": "MemoPackage",
-  "description": "This is personal memo package",
-  "unity": "2022.3",
-  "documentationUrl": "",
-  "changelogUrl": "",
-  "licensesUrl": "",
-  "keywords": [
-    "Memo",
-    "memo"
-  ],
+  "name": "com.memo.mm_common",
+  "version": "1.0.1",
+  "displayName": "Package MM Common",
+  "unity": "6",
   "author": {
     "name": "Memo",
     "email": "sansangjmjg@gmail.com"
-  },
-  "\u5099\u8003": {
-    "Dependencies\u53c2\u8003": "https: //yotiky.hatenablog.com/entry/unity_commonlyusedpackages"
   }
 }
