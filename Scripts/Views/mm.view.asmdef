@@ -1,0 +1,17 @@
+{
+    "name": "mm.view",
+    "rootNamespace": "mm.view",
+    "references": [
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:1e3f68c9b4acada4fa8a6bbd68118512"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
