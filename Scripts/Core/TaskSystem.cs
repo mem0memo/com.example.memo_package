@@ -22,6 +22,9 @@ namespace mm.core
 
             TTask Add<TTask>()
             where TTask : ITask, new();
+
+            TTask Create<TTask>()
+            where TTask : ITask, new();
         }
 
         public class Updater
@@ -162,6 +165,13 @@ namespace mm.core
                 list.Add(task);
                 return task;
             }
+
+            public void Enqueue<TTask>(TTask task)
+            where TTask : ITask
+            {
+                list.Add(task);
+            }
+
 
             public void OnTaskStart()
             {
