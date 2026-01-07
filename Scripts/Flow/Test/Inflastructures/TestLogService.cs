@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace mm.flow
 {
-    public class TestLogService : ServiceBehaviourBase
+    public class TestLogService : ServiceComponentBase
     {
         public void LogStart(string message) => Debug.Log($"Start : {message}");
 
@@ -13,5 +13,7 @@ namespace mm.flow
         public void LogB() => Debug.Log("B");
 
         public void LogC() => Debug.Log("C");
+
+        public void Log(string message) => Debug.Log(message);
     }
 }

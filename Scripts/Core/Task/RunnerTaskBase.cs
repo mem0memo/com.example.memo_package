@@ -1,15 +1,13 @@
-using System;
-
-namespace mm.flow
+namespace mm
 {
-    public abstract class TaskNodeBase : ITask
+    public abstract class RunnerTaskBase : ITask
     {
         private StateType state;
         private TaskRunner runner;
 
-        public TaskNodeBase(TaskRunner runner)
+        public RunnerTaskBase()
         {
-            this.runner = runner;
+            this.runner = new TaskRunner();
         }
 
         public enum StateType
@@ -19,18 +17,10 @@ namespace mm.flow
             Failed,
         }
 
-        public bool IsCompleted { get; private set; }
-
-        public void OnTaskEnd()
-        {
-            OnTaskEndImpl(runner);
-            IsCompleted = true;
-            runner.Update(0);
-        }
+        public bool IsCompleted => state != StateType.Running;
 
         public void OnTaskEnter()
         {
-            IsCompleted = false;
             state = StateType.Running;
             OnTaskEnterImpl(runner);
             runner.Update(0);
@@ -40,22 +30,27 @@ namespace mm.flow
         {
             if (!IsCompleted)
             {
-                TaskUpdateImpl(runner);
+                TaskUpdateImpl(runner, deltaTime);
             }
 
             runner.Update(deltaTime);
-            IsCompleted = state != StateType.Running;
         }
 
-        protected virtual void OnTaskEnterImpl(TaskRunner runner)
+        public void OnTaskEnd()
+        {
+            OnTaskEndImpl(runner);
+            runner.Clear();
+        }
+
+        protected virtual void OnTaskEnterImpl(ITaskRunner runner)
         {
         }
 
-        protected virtual void TaskUpdateImpl(TaskRunner runner)
+        protected virtual void TaskUpdateImpl(ITaskRunner runner, double deltaTime)
         {
         }
 
-        protected virtual void OnTaskEndImpl(TaskRunner runner)
+        protected virtual void OnTaskEndImpl(ITaskRunner runner)
         {
         }
 

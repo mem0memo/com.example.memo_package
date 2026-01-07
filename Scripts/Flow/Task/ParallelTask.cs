@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace mm.flow
 {
-    public class ParallelTask : TaskNodeBase
+    public class ParallelTask : RunnerTaskBase
     {
         private List<ITask> taskList;
 
@@ -18,7 +18,7 @@ namespace mm.flow
 
         public IList<ITask> List => taskList;
 
-        protected override void OnTaskEnterImpl(TaskRunner runner)
+        protected override void OnTaskEnterImpl(ITaskRunner runner)
         {
             foreach (var task in taskList)
             {
@@ -28,7 +28,7 @@ namespace mm.flow
             Running();
         }
 
-        protected override void OnTaskEndImpl(TaskRunner runner)
+        protected override void OnTaskEndImpl(ITaskRunner runner)
         {
             bool allComplete = false;
             foreach (var task in taskList)
@@ -50,7 +50,7 @@ namespace mm.flow
             }
         }
 
-        protected override void TaskUpdateImpl(TaskRunner runner)
+        protected override void TaskUpdateImpl(ITaskRunner runner, double deltaTime)
         {
             var allComplete = true;
             foreach (var task in taskList)

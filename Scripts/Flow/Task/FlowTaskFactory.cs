@@ -1,30 +1,22 @@
 using System;
-using System.Collections.Generic;
 
 namespace mm.flow
 {
-    public static class FlowTaskFactory
+    public class FlowTaskFactory : ServiceComponentBase
     {
-        public static ITask CreateAction(Action action) => new ActionTask(action);
+        public ITask CreateAction(Action action)
+            => new ActionTask(action);
 
-        public static ITask CreateWait(float duration) => new WaitTask(duration);
+        public ITask CreateWait(float duration)
+            => new WaitTask(duration);
 
-        public static ParallelTask CreateParallel(this TaskRunner runner) => new ParallelTask();
+        public ParallelTask CreateParallel()
+            => new ParallelTask();
 
-        public static SequenceTask CreateSequence(this TaskRunner runner) => new SequenceTask();
+        public SequenceTask CreateSequence()
+            => new SequenceTask();
 
-        public static RepeatTask CreateRepeat(TaskRunner runner, ITask task) => new RepeatTask(task);
-
-        public static SequenceTask Add(this SequenceTask sequence, ITask task)
-        {
-            sequence.List.Add(task);
-            return sequence;
-        }
-
-        public static ParallelTask Add(this ParallelTask parallel, ITask task)
-        {
-            parallel.List.Add(task);
-            return parallel;
-        }
+        public RepeatTask CreateRepeat(ITask task)
+            => new RepeatTask(task);
     }
 }

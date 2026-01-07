@@ -1,6 +1,6 @@
 namespace mm.flow
 {
-    public class RepeatTask : TaskNodeBase
+    public class RepeatTask : RunnerTaskBase
     {
         private ITask task;
 
@@ -9,12 +9,12 @@ namespace mm.flow
             this.task = task;
         }
 
-        protected override void OnTaskEnterImpl(TaskRunner runner)
+        protected override void OnTaskEnterImpl(ITaskRunner runner)
         {
             runner.Run(task);
         }
 
-        protected override void OnTaskEndImpl(TaskRunner runner)
+        protected override void OnTaskEndImpl(ITaskRunner runner)
         {
             if (task.IsCompleted)
             {
@@ -28,7 +28,7 @@ namespace mm.flow
             }
         }
 
-        protected override void TaskUpdateImpl(TaskRunner runner)
+        protected override void TaskUpdateImpl(ITaskRunner runner, double deltaTime)
         {
             if (task.IsCompleted)
             {

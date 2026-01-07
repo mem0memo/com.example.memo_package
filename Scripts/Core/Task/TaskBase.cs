@@ -1,6 +1,4 @@
-using System;
-
-namespace mm.flow
+namespace mm
 {
     public class TaskBase : ITask
     {

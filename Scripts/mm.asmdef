@@ -1,16 +1,12 @@
 {
-    "name": "mm.flow",
-    "rootNamespace": "mm.flow",
-    "references": [
-        "GUID:59347dbeaa3201e44a38daa38b6deecf"
-    ],
+    "name": "mm",
+    "rootNamespace": "mm",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
-    "precompiledReferences": [
-        ""
-    ],
+    "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],

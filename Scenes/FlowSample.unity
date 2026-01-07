@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &168965141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168965142}
+  - component: {fileID: 168965143}
+  m_Layer: 0
+  m_Name: RootServices
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &168965142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168965141}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 939109428}
+  - {fileID: 1850721989}
+  m_Father: {fileID: 1542197272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &168965143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168965141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68373d6ecea65d4eafb207e7433640b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm::mm.ServiceProvider
+  components:
+  - {fileID: 939109429}
+  - {fileID: 1850721991}
 --- !u!1 &482321626
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68373d6ecea65d4eafb207e7433640b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: mm.controller::mm.controller.ServiceProvider
-  serviceList: []
+  components: []
 --- !u!1 &651739888
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,8 +329,9 @@ GameObject:
   - component: {fileID: 939109428}
   - component: {fileID: 939109429}
   - component: {fileID: 939109430}
+  - component: {fileID: 939109432}
   m_Layer: 0
-  m_Name: Service
+  m_Name: Application
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,12 +345,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939109427}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1542197272}
+  m_Father: {fileID: 168965142}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &939109429
 MonoBehaviour:
@@ -314,8 +364,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68373d6ecea65d4eafb207e7433640b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: mm.controller::mm.controller.ServiceProvider
-  serviceList:
+  components:
   - {fileID: 939109430}
+  - {fileID: 939109432}
 --- !u!114 &939109430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +379,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e65f54c363aca124cb6528ea4b75e933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: mm.flow::mm.flow.TestLogService
+--- !u!114 &939109432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939109427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ef4cb80bf45f74bb5350fa2e872f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm.flow::mm.flow.TestTaskFactory
+  serviceProvider: {fileID: 168965143}
 --- !u!1 &1494147958
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,9 +529,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1542197272}
   - component: {fileID: 1542197273}
-  - component: {fileID: 1542197274}
   m_Layer: 0
-  m_Name: Test
+  m_Name: TestManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,11 +545,11 @@ Transform:
   m_GameObject: {fileID: 1542197271}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1496, y: 0, z: 1.97759}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 939109428}
+  - {fileID: 168965142}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1542197273
@@ -501,20 +564,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f84ad2ac5144f4f8faeb90327a3656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: mm.flow::mm.flow.Test
-  flowManager: {fileID: 1542197274}
---- !u!114 &1542197274
+  flowManager: {fileID: 1850721990}
+  test3: 0
+--- !u!1 &1850721988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1850721989}
+  - component: {fileID: 1850721991}
+  - component: {fileID: 1850721990}
+  - component: {fileID: 1850721992}
+  m_Layer: 0
+  m_Name: Infrastructure
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1850721989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850721988}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 168965142}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1850721990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542197271}
+  m_GameObject: {fileID: 1850721988}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ed9b21b2c7fd4a4ca43298da2094bb8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: mm.flow::mm.flow.FlowUpdater
-  serviceProvider: {fileID: 939109429}
+  m_EditorClassIdentifier: mm.flow::mm.flow.FlowManager
+  serviceProvider: {fileID: 168965143}
+--- !u!114 &1850721991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850721988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68373d6ecea65d4eafb207e7433640b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm.controller::mm.controller.ServiceProvider
+  components:
+  - {fileID: 1850721990}
+  - {fileID: 1850721992}
+--- !u!114 &1850721992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850721988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f058d1a661f510849880c875e0cc436d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm.flow::mm.flow.FlowTaskFactory
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

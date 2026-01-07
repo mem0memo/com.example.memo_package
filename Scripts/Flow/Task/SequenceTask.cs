@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace mm.flow
 {
-    public class SequenceTask : TaskNodeBase
+    public class SequenceTask : RunnerTaskBase
     {
         private List<ITask> taskList;
         private Queue<ITask> queue;
@@ -23,7 +23,7 @@ namespace mm.flow
 
         public IList<ITask> List => taskList;
 
-        protected override void OnTaskEnterImpl(TaskRunner runner)
+        protected override void OnTaskEnterImpl(ITaskRunner runner)
         {
             queue.Clear();
             foreach (var task in taskList)
@@ -39,7 +39,7 @@ namespace mm.flow
         }
 
 
-        protected override void OnTaskEndImpl(TaskRunner runner)
+        protected override void OnTaskEndImpl(ITaskRunner runner)
         {
             if (taskList.All(task => task.IsCompleted))
             {
@@ -61,7 +61,7 @@ namespace mm.flow
             }
         }
 
-        protected override void TaskUpdateImpl(TaskRunner runner)
+        protected override void TaskUpdateImpl(ITaskRunner runner, double deltaTime)
         {
             if (current.IsCompleted)
             {

@@ -2,7 +2,7 @@ using System;
 
 namespace mm.flow
 {
-    public class ConditionalTask : TaskNodeBase
+    public class ConditionalTask : RunnerTaskBase
     {
         private Func<bool> judge;
         private ITask successTask;
@@ -20,13 +20,13 @@ namespace mm.flow
             this.failedTask = failedTask;
         }
 
-        protected override void OnTaskEnterImpl(TaskRunner runner)
+        protected override void OnTaskEnterImpl(ITaskRunner runner)
         {
             this.current = judge.Invoke() ? successTask : failedTask;
             runner.Run(current);
         }
 
-        protected override void OnTaskEndImpl(TaskRunner runner)
+        protected override void OnTaskEndImpl(ITaskRunner runner)
         {
             if (current.IsCompleted)
             {
@@ -40,7 +40,7 @@ namespace mm.flow
             Fail();
         }
 
-        protected override void TaskUpdateImpl(TaskRunner runner)
+        protected override void TaskUpdateImpl(ITaskRunner runner, double deltaTime)
         {
             if (current.IsCompleted)
             {

@@ -1,4 +1,4 @@
-namespace mm.flow
+namespace mm
 {
     public interface ITask
     {
