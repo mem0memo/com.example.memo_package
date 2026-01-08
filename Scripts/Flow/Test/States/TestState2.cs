@@ -4,14 +4,14 @@ namespace mm.flow
     {
         private FlowTaskFactory Flow => GetService<FlowTaskFactory>();
 
-        private TestTaskFactory Test => GetService<TestTaskFactory>();
+        private TestLogService Log => GetService<TestLogService>();
 
         protected override void OnStateEnterImpl()
         {
-            RunTask(Test.Message("start : state2"));
+            RunTask(new TestMessageTask(Log) { Message = "start : state2" });
 
             var sequence = Flow.CreateSequence()
-                .Add(Test.Log())
+                .Add(new TestLogTask(Log))
                 .Add(Flow.CreateAction(Complete));
 
             RunTask(sequence);
@@ -19,7 +19,7 @@ namespace mm.flow
 
         protected override void OnStateEndImpl()
         {
-            RunTask(Test.Message("end : state2"));
+            RunTask(new TestMessageTask(Log) { Message = "end : state2" });
         }
     }
 }

@@ -4,23 +4,23 @@ namespace mm.flow
     {
         private FlowTaskFactory Flow => GetService<FlowTaskFactory>();
 
-        private TestTaskFactory Test => GetService<TestTaskFactory>();
+        private TestLogService Log => GetService<TestLogService>();
 
         protected override void OnStateEnterImpl()
         {
-            RunTask(Test.Message("start : state1"));
+            RunTask(new TestMessageTask(Log) { Message = "start : state1" });
 
             var sequence = Flow.CreateSequence();
             sequence
-                .Add(Test.Message("TestState1"))
+                .Add(new TestMessageTask(Log) { Message = "TestState1" })
                 .Add(Flow.CreateWait(1))
-                .Add(Test.Message("AA"))
+                .Add(new TestMessageTask(Log) { Message = "AA" })
                 .Add(Flow.CreateWait(0.5f))
-                .Add(Test.Message("BB"))
+                .Add(new TestMessageTask(Log) { Message = "BB" })
                 .Add(Flow.CreateWait(0.5f))
-                .Add(Test.Message("CC"))
+                .Add(new TestMessageTask(Log) { Message = "CC" })
                 .Add(Flow.CreateWait(2))
-                .Add(Test.Message("TestState1"))
+                .Add(new TestMessageTask(Log) { Message = "TestState1" })
                 .Add(Flow.CreateAction(Complete));
 
             RunTask(sequence);
@@ -28,7 +28,7 @@ namespace mm.flow
 
         protected override void OnStateEndImpl()
         {
-            RunTask(Test.Message("end : state1"));
+            RunTask(new TestMessageTask(Log) { Message = "end : state1" });
         }
     }
 }

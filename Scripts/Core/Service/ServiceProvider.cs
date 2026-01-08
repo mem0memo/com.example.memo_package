@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace mm
 {
-    public class ServiceProvider : ServiceComponentBase
+    public class ServiceProvider : MonoBehaviour
     {
         [SerializeField]
-        private List<ServiceComponentBase> components = new List<ServiceComponentBase>();
+        private ServiceProvider linkedParent;
 
         private Dictionary<Type, IService> serviceDict;
+        private ServiceProvider Parent => linkedParent;
 
         public void Register<T>(T service) where T : IService
             => serviceDict[typeof(T)] = service;
@@ -17,16 +18,23 @@ namespace mm
         public T GetService<T>()
             where T : IService
         {
-            if (serviceDict.TryGetValue(typeof(T), out var service))
+            if (TryGet<T>(out var result))
             {
-                return (T)service;
+                return (T)result;
             }
-
-            foreach (var value in serviceDict.Values)
+            else
             {
-                if (value is T result)
+                foreach (var value in serviceDict.Values)
                 {
-                    serviceDict[typeof(T)] = value;
+                    if (value is T service)
+                    {
+                        serviceDict[typeof(T)] = value;
+                        return service;
+                    }
+                }
+
+                if (Parent != null && Parent.TryGet<T>(out result))
+                {
                     return result;
                 }
             }
@@ -37,34 +45,27 @@ namespace mm
         private void Awake()
         {
             serviceDict = new Dictionary<Type, IService>();
-            var services = GetServicesRecursive();
+            var components = GetComponents<IService>();
 
-            foreach (var service in services)
+            foreach (var component in components)
             {
-                serviceDict[service.GetType()] = service;
+                if (component is IService service)
+                {
+                    serviceDict[service.GetType()] = service;
+                }
             }
         }
 
-        private IEnumerable<IService> GetServicesRecursive()
+        private bool TryGet<TService>(out TService result)
         {
-            foreach (var component in components)
+            if (serviceDict.TryGetValue(typeof(TService), out var service))
             {
-                if (component is ServiceProvider provider)
-                {
-                    var services = provider.GetServicesRecursive();
-                    foreach (var service in services)
-                    {
-                        yield return service;
-                    }
-                }
-                else
-                {
-                    if (component is IService)
-                    {
-                        yield return component;
-                    }
-                }
+                result = (TService)service;
+                return true;
             }
+
+            result = default;
+            return false;
         }
     }
 }

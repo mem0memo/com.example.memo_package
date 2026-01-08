@@ -10,12 +10,14 @@ namespace mm.flow
         private ServiceProvider serviceProvider;
         private TaskRunner taskRunner = new TaskRunner();
         private StateMachine stateMachine = new StateMachine();
-        private Dictionary<IState, Transition> transitionDict = new Dictionary<IState, Transition>();
+
+        private Dictionary<Type, IState> stateDict = new Dictionary<Type, IState>();
+        private Dictionary<Type, Transition> transitionDict = new Dictionary<Type, Transition>();
 
         [SerializeField]
         private bool log;
 
-        public TState CreateState<TState>()
+        public TState RegisterState<TState>()
         where TState : FlowStateBase, new()
         {
             var stateContext = new FlowStateContext()
@@ -26,20 +28,24 @@ namespace mm.flow
 
             var state = new TState();
             state.SetContext(stateContext);
+            stateDict[typeof(TState)] = state;
             return state;
         }
 
-        public void RegisterTransition(IState state, Func<IState> next)
+        public void RegisterTransition<TState>(Func<Type> next)
         {
-            transitionDict[state] = new Transition { Next = next };
+            transitionDict[typeof(TState)] = new Transition { Next = next };
         }
 
-        public void Change<TState>(TState state)
+        public void Change<TState>()
             where TState : IState
         {
-            taskRunner.Clear();
-            stateMachine.Change(state);
-            Log(state);
+            if (stateDict.TryGetValue(typeof(TState), out var state))
+            {
+                taskRunner.Clear();
+                stateMachine.Change(state);
+                Log(state);
+            }
         }
 
         void ITaskRunner.End(ITask task) => taskRunner.End(task);
@@ -73,12 +79,20 @@ namespace mm.flow
                 return;
             }
 
-            if (transitionDict.TryGetValue(current, out var transition))
+            var type = current.GetType();
+            if (transitionDict.TryGetValue(type, out var transition))
             {
-                var next = transition.Next?.Invoke();
-                stateMachine.Change(next);
-                Log(next);
+                var nextType = transition.Next?.Invoke();
+                if (nextType != null && stateDict.TryGetValue(nextType, out var next))
+                {
+                    stateMachine.Change(next);
+                    Log(next);
+                    return;
+                }
             }
+
+            stateMachine.Change(default);
+            Log(null);
         }
 
         private void Log(IState state)
@@ -92,7 +106,7 @@ namespace mm.flow
 
         private struct Transition
         {
-            public Func<IState> Next;
+            public Func<Type> Next;
         }
     }
 }
