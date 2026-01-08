@@ -12,6 +12,9 @@ namespace mm.flow
         private StateMachine stateMachine = new StateMachine();
         private Dictionary<IState, Transition> transitionDict = new Dictionary<IState, Transition>();
 
+        [SerializeField]
+        private bool log;
+
         public TState CreateState<TState>()
         where TState : FlowStateBase, new()
         {
@@ -36,6 +39,7 @@ namespace mm.flow
         {
             taskRunner.Clear();
             stateMachine.Change(state);
+            Log(state);
         }
 
         void ITaskRunner.End(ITask task) => taskRunner.End(task);
@@ -73,6 +77,16 @@ namespace mm.flow
             {
                 var next = transition.Next?.Invoke();
                 stateMachine.Change(next);
+                Log(next);
+            }
+        }
+
+        private void Log(IState state)
+        {
+            if (log)
+            {
+                var message = state == null ? "null" : state.GetType().Name;
+                Debug.Log($"[State] : {message}");
             }
         }
 
