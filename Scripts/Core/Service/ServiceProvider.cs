@@ -10,7 +10,6 @@ namespace mm
         private ServiceProvider linkedParent;
 
         private Dictionary<Type, IService> serviceDict;
-        private ServiceProvider Parent => linkedParent;
 
         public void Register<T>(T service) where T : IService
             => serviceDict[typeof(T)] = service;
@@ -20,23 +19,16 @@ namespace mm
         {
             if (TryGet<T>(out var result))
             {
-                return (T)result;
+                return result;
             }
-            else
+            else if (TryGetWithType(out result))
             {
-                foreach (var value in serviceDict.Values)
-                {
-                    if (value is T service)
-                    {
-                        serviceDict[typeof(T)] = value;
-                        return service;
-                    }
-                }
-
-                if (Parent != null && Parent.TryGet<T>(out result))
-                {
-                    return result;
-                }
+                serviceDict[typeof(T)] = result;
+                return result;
+            }
+            else if (linkedParent != null)
+            {
+                return linkedParent.GetService<T>();
             }
 
             throw new KeyNotFoundException($"Service not found: {typeof(T)}");
@@ -62,6 +54,21 @@ namespace mm
             {
                 result = (TService)service;
                 return true;
+            }
+
+            result = default;
+            return false;
+        }
+
+        private bool TryGetWithType<TService>(out TService result)
+        {
+            foreach (var value in serviceDict.Values)
+            {
+                if (value is TService service)
+                {
+                    result = (TService)value;
+                    return true;
+                }
             }
 
             result = default;

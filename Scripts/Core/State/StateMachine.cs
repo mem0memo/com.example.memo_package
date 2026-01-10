@@ -1,12 +1,8 @@
-using System;
-
 namespace mm
 {
     public class StateMachine
     {
         private IState current;
-
-        public Action<IState> Completed { get; set; }
 
         public void Change(IState state)
         {
@@ -17,6 +13,12 @@ namespace mm
                 this.current = state;
                 current?.OnStateEnter();
             }
+        }
+
+        public void End()
+        {
+            current?.OnStateEnd();
+            current = default;
         }
 
         public void Update(double deltaTime)
@@ -30,10 +32,8 @@ namespace mm
                 current.StateUpdate(deltaTime);
                 if (current.IsCompleted)
                 {
-                    var prev = current;
                     current?.OnStateEnd();
-                    current = null;
-                    Completed?.Invoke(prev);
+                    current = default;
                 }
             }
         }
