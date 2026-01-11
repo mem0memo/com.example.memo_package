@@ -32,7 +32,7 @@ namespace mm.flow
 
         protected TService GetService<TService>()
             where TService : IService
-            => context.IsValid() ? context.ServiceProvider.GetService<TService>() : default;
+            => context.IsValid() ? context.ServiceProvider.Resolve<TService>() : default;
 
         protected void RunTask(ITask task)
         {

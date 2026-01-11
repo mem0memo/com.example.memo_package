@@ -9,12 +9,12 @@ namespace mm
         [SerializeField]
         private ServiceProvider linkedParent;
 
-        private Dictionary<Type, IService> serviceDict;
+        private Dictionary<Type, IService> serviceDict = new Dictionary<Type, IService>();
 
         public void Register<T>(T service) where T : IService
             => serviceDict[typeof(T)] = service;
 
-        public T GetService<T>()
+        public T Resolve<T>()
             where T : IService
         {
             if (TryGet<T>(out var result))
@@ -28,7 +28,7 @@ namespace mm
             }
             else if (linkedParent != null)
             {
-                return linkedParent.GetService<T>();
+                return linkedParent.Resolve<T>();
             }
 
             throw new KeyNotFoundException($"Service not found: {typeof(T)}");
