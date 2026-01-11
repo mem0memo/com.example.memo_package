@@ -2,24 +2,30 @@ namespace mm.flow
 {
     public class TestState2 : FlowStateBase
     {
-        private FlowTaskFactory Flow => GetService<FlowTaskFactory>();
+        private FlowTaskFactory taskFactory;
+        private TestLogService logService;
+        private FlowManager flowManager;
 
-        private TestLogService Log => GetService<TestLogService>();
-
+        public TestState2(ServiceProvider serviceProvider)
+        {
+            serviceProvider.TryResolve(out taskFactory);
+            serviceProvider.TryResolve(out logService);
+            serviceProvider.TryResolve(out flowManager);
+        }
         protected override void OnStateEnterImpl()
         {
-            RunTask(new TestMessageTask(Log) { Message = "start : state2" });
+            flowManager.Run(new TestMessageTask(logService) { Message = "start : state2" });
 
-            var sequence = Flow.CreateSequence()
-                .Add(new TestLogTask(Log))
-                .Add(Flow.CreateAction(Complete));
+            var sequence = taskFactory.CreateSequence()
+                .Add(new TestLogTask(logService))
+                .Add(taskFactory.CreateAction(Complete));
 
-            RunTask(sequence);
+            flowManager.Run(sequence);
         }
 
         protected override void OnStateEndImpl()
         {
-            RunTask(new TestMessageTask(Log) { Message = "end : state2" });
+            flowManager.Run(new TestMessageTask(logService) { Message = "end : state2" });
         }
     }
 }

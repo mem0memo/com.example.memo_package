@@ -1,50 +1,30 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace mm.flow
 {
     public class FlowManager : ServiceComponentBase, ITaskRunner
     {
-        [SerializeField]
-        private ServiceProvider serviceProvider;
-        private TaskRunner taskRunner = new TaskRunner();
-        private FiniteStateMachine stateMachine = new FiniteStateMachine();
+        private TaskRunner taskRunner;
+        private StateMachine stateMachine;
 
-
-        [SerializeField]
-        private bool log;
-
-        public TState RegisterState<TState>()
-        where TState : FlowStateBase, new()
+        public void SetStateTable(IStateTable stateTable)
         {
-            var stateContext = new FlowStateContext()
-            {
-                ServiceProvider = serviceProvider,
-                TaskRunner = taskRunner,
-            };
-
-            var state = new TState();
-            state.SetContext(stateContext);
-            stateMachine.States[typeof(TState)] = state;
-            return state;
+            this.stateMachine = new StateMachine(stateTable);
         }
 
-        public void RegisterTransition<TState>(Func<Type> next)
+        public void End(ITask task) => taskRunner.End(task);
+
+        public void Run(ITask task) => taskRunner.Run(task);
+
+        public void SetState(IState state) => stateMachine.Set(state);
+
+        private void Awake()
         {
-            stateMachine.Transition[typeof(TState)] = next;
+            taskRunner = new TaskRunner();
+            stateMachine = new StateMachine();
         }
-
-        public void Change<TState>()
-            where TState : IState
-        {
-            taskRunner.Clear();
-            stateMachine.Start<TState>();
-            Debug.Log($"[State] : {typeof(TState).Name}");
-        }
-
-        void ITaskRunner.End(ITask task) => taskRunner.End(task);
-
-        void ITaskRunner.Run(ITask task) => taskRunner.Run(task);
 
         private void Update()
         {

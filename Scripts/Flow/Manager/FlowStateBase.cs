@@ -1,26 +1,20 @@
-namespace mm.flow
+using System;
+using UnityEngine;
+
+namespace mm
 {
-    public abstract class FlowStateBase : IState
+    public class FlowStateBase : MonoBehaviour, IState
     {
-        private FlowStateContext context;
-
-        public bool IsCompleted { get; private set; }
-
-        public void SetContext(FlowStateContext context)
-        {
-            this.context = context;
-        }
-
-        public void OnStateEnter()
-        {
-            IsCompleted = false;
-            OnStateEnterImpl();
-        }
+        public Action OnCompleted { get; set; }
 
         public void OnStateEnd()
         {
             OnStateEndImpl();
-            IsCompleted = true;
+        }
+
+        public void OnStateEnter()
+        {
+            OnStateEnterImpl();
         }
 
         public void StateUpdate(double deltaTime)
@@ -28,19 +22,7 @@ namespace mm.flow
             StateUpdateImpl(deltaTime);
         }
 
-        protected void Complete() => IsCompleted = true;
-
-        protected TService GetService<TService>()
-            where TService : IService
-            => context.IsValid() ? context.ServiceProvider.Resolve<TService>() : default;
-
-        protected void RunTask(ITask task)
-        {
-            if (context.IsValid())
-            {
-                context.TaskRunner.Run(task);
-            }
-        }
+        protected void Complete() => OnCompleted?.Invoke();
 
         protected virtual void OnStateEnterImpl()
         {

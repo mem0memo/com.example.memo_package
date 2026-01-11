@@ -22,19 +22,10 @@ namespace mm
         public void Clear()
         {
             addQueue.Clear();
-
             foreach (var update in updateList)
             {
-                update.OnTaskEnd();
+                removeQueue.Enqueue(update);
             }
-
-            foreach (var remove in removeQueue)
-            {
-                remove.OnTaskEnd();
-            }
-
-            updateList.Clear();
-            removeQueue.Clear();
         }
 
         public void Update(double deltaTime)

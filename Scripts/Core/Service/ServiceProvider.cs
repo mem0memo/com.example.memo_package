@@ -7,7 +7,7 @@ namespace mm
     public class ServiceProvider : MonoBehaviour
     {
         [SerializeField]
-        private ServiceProvider linkedParent;
+        private ServiceProvider[] links;
 
         private Dictionary<Type, IService> serviceDict = new Dictionary<Type, IService>();
 
@@ -17,21 +17,38 @@ namespace mm
         public T Resolve<T>()
             where T : IService
         {
-            if (TryGet<T>(out var result))
+            if (TryResolve<T>(out var result))
             {
                 return result;
+            }
+
+            throw new KeyNotFoundException($"Service not found: {typeof(T)}");
+        }
+
+        public bool TryResolve<T>(out T result)
+            where T : IService
+        {
+            if (TryGet(out result))
+            {
+                return true;
             }
             else if (TryGetWithType(out result))
             {
                 serviceDict[typeof(T)] = result;
-                return result;
+                return true;
             }
-            else if (linkedParent != null)
+            else
             {
-                return linkedParent.Resolve<T>();
+                foreach (var link in links)
+                {
+                    if (link.TryResolve(out result))
+                    {
+                        return true;
+                    }
+                }
             }
 
-            throw new KeyNotFoundException($"Service not found: {typeof(T)}");
+            return false;
         }
 
         private void Awake()
