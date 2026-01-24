@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace mm.flow
@@ -7,30 +5,34 @@ namespace mm.flow
     public class Test : MonoBehaviour
     {
         [SerializeField]
-        private FlowManager flowManager;
+        private FlowController flowController;
         [SerializeField]
-        private ServiceProvider serviceProvider;
+        private TestLogger testLogger;
 
-        private FiniteStateTable stateTable;
-        private Dictionary<Type, IState> stateDict;
+        private ServiceLocator serviceProvider;
+
+        public enum TestStateType
+        {
+            State1,
+            State2,
+        }
 
         private void Awake()
         {
-            stateTable = new FiniteStateTable();
-            stateDict = new Dictionary<Type, IState>();
-            stateDict[typeof(TestState1)] = new TestState1(serviceProvider);
-            stateDict[typeof(TestState2)] = new TestState2(serviceProvider);
-        }
+            serviceProvider = new ServiceLocator();
+            serviceProvider.Register(flowController);
+            serviceProvider.Register(testLogger);
 
-        private void Start()
-        {
-            stateTable.Transition.Add(typeof(TestState1), () => typeof(TestState2));
+            var state1 = new TestState1(serviceProvider);
+            var state2 = new TestState2(serviceProvider) { NextIndex = (int)Test.TestStateType.State1 };
+            flowController.Register((int)TestStateType.State1, state1);
+            flowController.Register((int)TestStateType.State2, state2);
         }
 
         [ContextMenu("State1")]
-        public void State1() => flowManager.SetState(stateDict[typeof(TestState1)]);
+        public void State1() => flowController.Set((int)TestStateType.State1);
 
         [ContextMenu("State2")]
-        public void State2() => flowManager.SetState(stateDict[typeof(TestState2)]);
+        public void State2() => flowController.Set((int)TestStateType.State2);
     }
 }

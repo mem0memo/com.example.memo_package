@@ -3,17 +3,6 @@ namespace mm
     public class StateMachine
     {
         private IState current;
-        private IStateTable stateTable;
-
-        public StateMachine(IStateTable table)
-        {
-            stateTable = table;
-        }
-
-        public StateMachine()
-        {
-            stateTable = new IStateTable.Empty();
-        }
 
         public IState Current => current;
 
@@ -26,15 +15,13 @@ namespace mm
                 current?.OnStateEnd();
                 this.current = next;
                 current?.OnStateEnter();
-                stateTable.Change(prev, next);
             }
         }
 
         public void End()
         {
             current?.OnStateEnd();
-            current = stateTable.Next(current);
-            current?.OnStateEnter();
+            current = default;
         }
 
         public void Update(double deltaTime)

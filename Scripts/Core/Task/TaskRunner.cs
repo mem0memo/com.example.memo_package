@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace mm
 {
-    public class TaskRunner : ITaskRunner
+    public class TaskRunner
     {
         private Queue<ITask> addQueue;
         private List<ITask> updateList;
