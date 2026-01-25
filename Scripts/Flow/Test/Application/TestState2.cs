@@ -11,17 +11,17 @@ namespace mm.flow
 
         public int NextIndex { get; set; }
 
-        public void OnStateEnter()
+        public void OnEnter()
         {
             message.Send("state2", UnityEngine.Color.white);
         }
 
-        public void OnStateEnd()
+        public void OnQuit()
         {
             message.Send("end state2", UnityEngine.Color.gray);
         }
 
-        public void StateUpdate(double deltaTime)
+        public void Tick(double deltaTime)
         {
         }
     }

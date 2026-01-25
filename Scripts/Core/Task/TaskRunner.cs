@@ -30,35 +30,30 @@ namespace mm
 
         public void Update(double deltaTime)
         {
+            //remove
+            while (removeQueue.TryDequeue(out var remove))
+            {
+                if (updateList.Contains(remove))
+                {
+                    remove?.OnRemove();
+                    updateList.Remove(remove);
+                }
+            }
+
+            removeQueue.Clear();
+
             //add
             while (addQueue.TryDequeue(out var add))
             {
-                add.OnTaskEnter();
+                add.OnEnter();
                 updateList.Add(add);
             }
 
             //update
             foreach (var task in updateList)
             {
-                task.TaskUpdate(deltaTime);
-                if (task.IsCompleted)
-                {
-                    removeQueue.Enqueue(task);
-                    continue;
-                }
+                task.Tick(deltaTime);
             }
-
-            //remove
-            while (removeQueue.TryDequeue(out var remove))
-            {
-                if (updateList.Contains(remove))
-                {
-                    remove?.OnTaskEnd();
-                    updateList.Remove(remove);
-                }
-            }
-
-            removeQueue.Clear();
         }
     }
 }

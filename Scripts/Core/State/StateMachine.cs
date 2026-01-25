@@ -12,15 +12,15 @@ namespace mm
             if (changed)
             {
                 var prev = current;
-                current?.OnStateEnd();
+                current?.OnQuit();
                 this.current = next;
-                current?.OnStateEnter();
+                current?.OnEnter();
             }
         }
 
         public void End()
         {
-            current?.OnStateEnd();
+            current?.OnQuit();
             current = default;
         }
 
@@ -32,7 +32,7 @@ namespace mm
             }
             else
             {
-                current.StateUpdate(deltaTime);
+                current.Tick(deltaTime);
             }
         }
     }

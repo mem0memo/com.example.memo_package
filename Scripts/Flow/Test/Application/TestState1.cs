@@ -9,17 +9,17 @@ namespace mm.flow
             serviceProvider.TryResolve(out message);
         }
 
-        public void OnStateEnter()
+        public void OnEnter()
         {
             message.Send("state1", UnityEngine.Color.white);
         }
 
-        public void OnStateEnd()
+        public void OnQuit()
         {
             message.Send("end state1", UnityEngine.Color.gray);
         }
 
-        public void StateUpdate(double deltaTime)
+        public void Tick(double deltaTime)
         {
         }
     }

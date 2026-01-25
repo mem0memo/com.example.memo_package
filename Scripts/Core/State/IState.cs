@@ -3,10 +3,10 @@ namespace mm
 {
     public interface IState
     {
-        void OnStateEnter();
+        void OnEnter();
 
-        void OnStateEnd();
+        void OnQuit();
 
-        void StateUpdate(double deltaTime);
+        void Tick(double deltaTime);
     }
 }
