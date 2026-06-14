@@ -1,10 +1,11 @@
 {
-  "name": "com.memo.mm-common",
+  "name": "com.memo.mm",
   "version": "1.0.1",
-  "displayName": "Package MM Common",
-  "unity": "6.0",
+  "displayName": "MM",
+  "unity": "6000.3",
   "author": {
     "name": "memo",
     "email": "sansangjmjg@gmail.com"
-  }
+  },
+  "description": "mm"
 }
