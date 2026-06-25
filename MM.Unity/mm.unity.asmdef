@@ -2,7 +2,9 @@
     "name": "mm.unity",
     "rootNamespace": "mm.unity",
     "references": [
-        "GUID:d56e11fc7e300194c916e8528b0d37e1"
+        "GUID:6184b099d2a3500439a33a998a930feb",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
