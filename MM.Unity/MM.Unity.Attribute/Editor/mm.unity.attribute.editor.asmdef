@@ -1,0 +1,18 @@
+{
+    "name": "mm.unity.attribute.editor",
+    "rootNamespace": "mm.unity.attribute.editor",
+    "references": [
+        "GUID:cd19aa1965397e249a06711d75b4be8a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
