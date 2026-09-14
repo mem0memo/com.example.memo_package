@@ -30,10 +30,7 @@ namespace mm.unity.flow
 
         protected abstract IState CreateFlow(TFlowType flowType, InfraProvider infraProvider);
 
-        protected virtual IEnumerable<IInfrastructure> GetStartupInfrastructures()
-        {
-            return new IInfrastructure[] { };
-        }
+        protected virtual IEnumerable<object> GetInitializeInfras() => new object[] { };
 
         private void Awake()
         {
@@ -44,11 +41,11 @@ namespace mm.unity.flow
         private void Start()
         {
             // infra
-            infraProvider.Register(this);
-            var startupInfrastructures = GetStartupInfrastructures();
-            foreach (var infra in startupInfrastructures)
+            infraProvider.Install(this);
+            var infras = GetInitializeInfras();
+            foreach (var infra in infras)
             {
-                infraProvider.Register(infra);
+                infraProvider.Install(infra);
             }
 
             // setup flows
@@ -72,22 +69,6 @@ namespace mm.unity.flow
         private void RestartFlow()
         {
             StartFlow(flowType);
-        }
-
-        protected class StateBase<TController> : CtsStateBase
-        {
-            public StateBase(InfraProvider infraProvider, TController controller)
-            {
-                this.Infras = infraProvider;
-                this.Controller = controller;
-                this.Flow = infraProvider.Find<IFlowController<TFlowType>>();
-            }
-
-            protected TController Controller { get; private set; }
-
-            protected InfraProvider Infras { get; private set; }
-
-            protected IFlowController<TFlowType> Flow { get; private set; }
         }
     }
 }

@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using mm.core.flow;
 using UnityEngine;
 
 namespace mm.unity
 {
-    public class MessagePanel : MonoBehaviour, IInfrastructure
+    public class MessagePanel : MonoBehaviour
     {
         [SerializeField]
         private TMPro.TMP_Text text;

@@ -6,14 +6,14 @@ namespace mm.core.state
 
         public void Start(IState state)
         {
-            current?.Stop();
+            current?.Exit();
             this.current = state;
-            current?.Start();
+            current?.Enter();
         }
 
         public void Update(double deltaTime)
         {
-            current?.Update(deltaTime);
+            current?.ProcessFrame(deltaTime);
         }
     }
 }

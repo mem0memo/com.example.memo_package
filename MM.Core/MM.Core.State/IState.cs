@@ -2,8 +2,8 @@ namespace mm.core.state
 {
     public interface IState
     {
-        void Start();
-        void Stop();
-        void Update(double deltaTime);
+        void Enter();
+        void Exit();
+        void ProcessFrame(double deltaTime);
     }
 }

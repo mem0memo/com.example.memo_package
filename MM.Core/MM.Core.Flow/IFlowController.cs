@@ -1,6 +1,6 @@
 namespace mm.core.flow
 {
-    public interface IFlowController<TType> : IInfrastructure
+    public interface IFlowController<TType>
     {
         TType CurrentFlow { get; }
 

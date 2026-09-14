@@ -2,30 +2,30 @@ namespace mm.core.state
 {
     public class StateBase : IState
     {
-        public void Start()
+        public void Enter()
         {
-            OnStart();
+            OnEntry();
         }
 
-        public void Stop()
+        public void Exit()
         {
-            OnStop();
+            OnExit();
         }
 
-        public void Update(double deltaTime)
+        public void ProcessFrame(double deltaTime)
         {
-            OnUpdate(deltaTime);
+            ProcessFrame(deltaTime);
         }
 
-        protected virtual void OnStart()
-        {
-        }
-
-        protected virtual void OnStop()
+        protected virtual void OnEntry()
         {
         }
 
-        protected virtual void OnUpdate(double deltaTime)
+        protected virtual void OnExit()
+        {
+        }
+
+        protected virtual void OnProcessFrame(double deltaTime)
         {
         }
     }
