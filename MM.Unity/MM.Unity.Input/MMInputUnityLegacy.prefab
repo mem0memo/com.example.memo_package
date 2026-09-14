@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2965795498185691609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5742657156824076161}
+  - component: {fileID: 2159159998889848700}
+  - component: {fileID: 4687146781460789094}
+  - component: {fileID: 979475407699282042}
+  m_Layer: 0
+  m_Name: MMInputUnityLegacy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5742657156824076161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2965795498185691609}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2159159998889848700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2965795498185691609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9ae4af87b42346ab008d8848fb58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm.unity::mm.unity.input.MMInputUnityLegacy
+  longHold: 1
+  longPressThreshold: 1
+  intervalHold: 1
+  holdInterval: 0.5
+  useHoldEvent: 0
+  bindings:
+  - key: 0
+    keys: 670100001b00000044010000
+  - key: 1
+    keys: 6601000009000000
+  - key: 2
+    keys: 6b010000
+  - key: 3
+    keys: 5f0100000d00000043010000
+  - key: 4
+    keys: 6001000008000000
+  - key: 5
+    keys: 5e01000066000000
+  - key: 6
+    keys: 6101000065000000
+  - key: 7
+    keys: 1101000077000000
+  - key: 8
+    keys: 1201000073000000
+  - key: 9
+    keys: 1401000061000000
+  - key: 10
+    keys: 1301000064000000
+  - key: 11
+    keys: 6201000071000000
+  - key: 12
+    keys: 6301000072000000
+  - key: 13
+    keys: 
+  - key: 14
+    keys: 
+  - key: 15
+    keys: 6801000030010000
+  - key: 16
+    keys: 69010000
+  keyboardMove: 1
+  stickDirectionKeys: 1
+  directionThreshold: 0.5
+  triggerThreshold: 0.5
+--- !u!114 &4687146781460789094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2965795498185691609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f532a8f01abd5a042b18db6ffdef4f33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm.unity::mm.unity.input.MMInputLogger
+  source: {fileID: 2159159998889848700}
+  logUpDown: 0
+  logIntervalHold: 0
+  logLongHold: 0
+  logValues: 0
+--- !u!114 &979475407699282042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2965795498185691609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a000ceddf501548a47f120d992caf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: mm.unity::mm.unity.input.MMInputEvents
+  source: {fileID: 2159159998889848700}
+  bindings:
+  - key: 0
+    eventType: 0
+    onInput:
+      m_PersistentCalls:
+        m_Calls: []
