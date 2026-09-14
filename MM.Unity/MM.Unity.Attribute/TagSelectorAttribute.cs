@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace mm.unity.Attribute
+namespace mm.unity.attribute
 {
     public class TagSelectorAttribute : PropertyAttribute
     {
